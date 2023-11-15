@@ -19,7 +19,7 @@ int printint(int num)
 	if (num < 0)
 	{
 		sign = '-';
-		write(1, &sign, 1);
+		write(STDOUT_FILENO, &sign, 1);
 		n++;
 		num = -num;
 	}
@@ -34,7 +34,7 @@ int printint(int num)
 	}
 	while (i--)
 	{
-		write(1, &buffer[i], 1);
+		write(STDOUT_FILENO, &buffer[i], 1);
 		n++;
 	}
 
@@ -52,7 +52,7 @@ int printstr(const char *str)
 
 	while (*str)
 	{
-		write(1, str++, 1);
+		write(STDOUT_FILENO, str++, 1);
 		n++;
 	}
 
@@ -75,12 +75,12 @@ int parsef(const char *format, va_list args)
 	switch (*format)
 	{
 		case '%':
-			write(1, format, 1);
+			write(STDOUT_FILENO, format, 1);
 			n++;
 		break;
 		case 'c':
 			c = va_arg(args, int);
-			write(1, &c, 1);
+			write(STDOUT_FILENO, &c, 1);
 			n++;
 		break;
 		case 's':
@@ -93,7 +93,7 @@ int parsef(const char *format, va_list args)
 			n += printint(num);
 		break;
 		default:
-			write(1, format, 1);
+			write(STDOUT_FILENO, format, 1);
 			n++;
 		break;
 	}
@@ -118,7 +118,7 @@ int _printf(const char *format, ...)
 	{
 		if (*format != '%')
 		{
-			write(1, format, 1);
+			write(STDOUT_FILENO, format, 1);
 			n++;
 			format++;
 			continue;
