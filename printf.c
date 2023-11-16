@@ -99,17 +99,6 @@ int parsef(const char *format, va_list args)
 		case '\0':
 			return (-1);
 		break;
-		/* TODO */
-		case 'b':
-		case 'u':
-		case 'o':
-		case 'x':
-		case 'X':
-		case '+':
-		case ' ':
-		case '#':
-		case 'l':
-		case 'h':
 		default:
 			write(STDOUT_FILENO, format - 1, 2);
 			return (2);
