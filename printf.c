@@ -50,9 +50,10 @@ int printstr(const char *str)
 {
 	int n = 0;
 
-	if (str == NULL) {
+	if (str == NULL)
+	{
 		write(STDOUT_FILENO, &"(null)", 6);
-		return 6;
+		return (6);
 	}
 
 	while (*str)
@@ -72,10 +73,9 @@ int printstr(const char *str)
 */
 int parsef(const char *format, va_list args)
 {
-	int n = 0;
+	int n = 0, num;
 	char c;
 	char *s;
-	int num;
 
 	switch (*format)
 	{
@@ -92,8 +92,7 @@ int parsef(const char *format, va_list args)
 			s = va_arg(args, char*);
 			n += printstr(s);
 		break;
-		case 'd':
-		case 'i':
+		case 'd': case 'i':
 			num = va_arg(args, int);
 			n += printint(num);
 		break;
@@ -127,7 +126,8 @@ int _printf(const char *format, ...)
 	int n = 0, r = 0;
 	va_list args;
 
-	if (format == NULL) {
+	if (format == NULL)
+	{
 		return (-1);
 	}
 
@@ -144,9 +144,8 @@ int _printf(const char *format, ...)
 		}
 		format++;
 		r = parsef(format, args);
-		if (r < 0) {
+		if (r < 0)
 			return (r);
-		}
 		n += r;
 
 		format++;
