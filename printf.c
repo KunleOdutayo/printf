@@ -92,9 +92,19 @@ int parsef(const char *format, va_list args)
 			num = va_arg(args, int);
 			n += printint(num);
 		break;
+		/* TODO */
+		case 'b':
+		case 'u':
+		case 'o':
+		case 'x':
+		case 'X':
+		case '+':
+		case ' ':
+		case '#':
+		case 'l':
+		case 'h':
 		default:
-			write(STDOUT_FILENO, format, 1);
-			n++;
+			return (-1);
 		break;
 	}
 
@@ -109,8 +119,12 @@ int parsef(const char *format, va_list args)
 */
 int _printf(const char *format, ...)
 {
-	int n = 0;
+	int n = 0, r = 0;
 	va_list args;
+
+	if (format == NULL) {
+		return (-1);
+	}
 
 	va_start(args, format);
 
@@ -124,7 +138,10 @@ int _printf(const char *format, ...)
 			continue;
 		}
 		format++;
-		n += parsef(format, args);
+		r = parsef(format, args);
+		if (r < 0) {
+			return (r);
+		}
 
 		format++;
 	}
