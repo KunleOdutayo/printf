@@ -56,5 +56,13 @@ int main(void)
     len2 = printf("null arg: %s\n", (char *)0);
     _printf("Len:[%d]\n", len);
     printf("Len:[%d]\n", len2);
+    len = _printf("null c arg: %c\n", NULL);
+    len2 = printf("null c arg: %c\n", NULL);
+    _printf("Len:[%d]\n", len);
+    printf("Len:[%d]\n", len2);
+    len = _printf("%!\n");
+    len2 = printf("%!\n");
+    _printf("Len:[%d]\n", len);
+    printf("Len:[%d]\n", len2);
     return (0);
 }

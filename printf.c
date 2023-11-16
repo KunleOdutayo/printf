@@ -108,8 +108,8 @@ int parsef(const char *format, va_list args)
 		case 'l':
 		case 'h':
 		default:
-			return (-1);
-		break;
+			write(STDOUT_FILENO, format - 1, 2);
+			return (2);
 	}
 
 	return (n);
