@@ -96,6 +96,9 @@ int parsef(const char *format, va_list args)
 			num = va_arg(args, int);
 			n += printint(num);
 		break;
+		case '\0':
+			return (-1);
+		break;
 		/* TODO */
 		case 'b':
 		case 'u':
@@ -127,9 +130,7 @@ int _printf(const char *format, ...)
 	va_list args;
 
 	if (format == NULL)
-	{
 		return (-1);
-	}
 
 	va_start(args, format);
 
