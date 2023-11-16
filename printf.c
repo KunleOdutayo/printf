@@ -142,6 +142,7 @@ int _printf(const char *format, ...)
 		if (r < 0) {
 			return (r);
 		}
+		n += r;
 
 		format++;
 	}
