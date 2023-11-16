@@ -50,6 +50,11 @@ int printstr(const char *str)
 {
 	int n = 0;
 
+	if (str == NULL) {
+		write(STDOUT_FILENO, &"(null)", 6);
+		return 6;
+	}
+
 	while (*str)
 	{
 		write(STDOUT_FILENO, str++, 1);
