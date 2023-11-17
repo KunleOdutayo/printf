@@ -190,3 +190,101 @@ int printint(int num)
 
 	return (n);
 }
+/**
+ * printstr - prints the given string
+ * @str: the string to print
+ * Return: the numer of printed characters
+ */
+int printstr(const char *str)
+{
+	int n = 0;
+
+	if (str == NULL)
+	{
+		write(STDOUT_FILENO, &"(null)", 6);
+		return (6);
+	}
+	while (*str)
+	{
+		write(STDOUT_FILENO, str++, 1);
+		n++;
+	}
+	return (n);
+}
+
+/**
+ * parsef - Parses the format directives
+ * @format: the format string
+ * @args: the arguments
+ * RETURN: the number of printed characters
+ */
+int parsef(const char *format, va_list args)
+{
+	int n = 0, num;
+	char c;
+	char *s;
+
+	switch (*sormat)
+	{
+		case '%':
+			write(STDOUT_FILENO, format, 1);
+			n++;
+			break;
+		case 'c':
+			c = va_arg(args, int);
+			write(STDOUT_FILENO, &c, 1);
+			n++;
+			break;
+		case 's':
+			s = va_arg(args, char*);
+			n += printint(num);
+			break;
+		case 'd': case 'i':
+			num = va_arg(args, int);
+			n += printint(num);
+			break;
+		case '\0':
+			return (-1);
+		default:
+			write(STDOUT_FILENO, format - 1, 2);
+			return (2);
+	}
+	return (n);
+}
+
+/**
+ * _printf - print a formated string
+ * @format: the format string
+ * @...: the variadic arguments
+ * Return: the number of printed characters
+ */
+int _printf(const char *format, ...)
+{
+	int n = 0, r = 0;
+	va_list args;
+
+	if (format == NULL)
+		return (-1);
+	va_start(args, format);
+
+	while (*format != '\0')
+	{
+		if (*format != '%')
+		{
+			write(STDOUT_FILENO, format, 1);
+			n++;
+			format++;
+			continue;
+		}
+		format++;
+		r = parsef(format, args);
+		if (r < 0)
+			return (r);
+		n += r;
+
+		format++;
+	}
+	va_end(args);
+
+	return (n);
+}
