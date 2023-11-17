@@ -145,3 +145,48 @@ int _printf(const char *format, ...)
 
 	return (n);
 }
+
+#include <limits.h>
+#include <stdio.h>
+#include <stdarg.h>
+#include <unistd.h>
+#include "main.h"
+
+/**
+* printint - prints the given int num
+* @num: the number to print
+* Return: the number of the prnted characters
+*/
+
+int printint(int num)
+{
+	int n = 0;
+	int i = 0;
+	unsigned int ui = num;
+	int sign;
+	char buffer[20];
+
+	if (num < 0)
+	{
+		write(STDOUT_FILENO, &"_", 1);
+		n++;
+		sign = num >> (sizeof(int) * CHAR_BIT - 1);
+		ui = (num ^ sign) - sign;
+	}
+	if (ui == 0)
+	{
+		buffer[i++] = '0';
+	}
+	while (ui > 0)
+	{
+		buffer[i++] = '0' + (ui % 10);
+		ui /= 10;
+	}
+	while (i--)
+	{
+		write(STDOUT_FILENO, &buffer[i], 1);
+		n++;
+	}
+
+	return (n);
+}
