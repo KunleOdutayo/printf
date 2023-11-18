@@ -37,7 +37,7 @@ int printint(int num, int *n)
 	if (num < 0)
 	{
 		write(STDOUT_FILENO, &"-", 1);
-		n++;
+		(*n)++;
 		sign = num >> (sizeof(int) * CHAR_BIT - 1);
 		ui = (num ^ sign) - sign;
 	}
