@@ -43,31 +43,19 @@ int printstr(const char *str, int *n)
 }
 
 /**
-* parsef - parses the format directives
+* printnum - prints the given num
 * @format: the format string
 * @args: the arguments
 * @n: the count of characters printed
 * Return: error code
 */
-int parsef(const char *format, va_list args, int *n)
+int printnum(const char *format, va_list args, int *n)
 {
 	int num;
 	unsigned int ui;
-	char *s, c;
 
 	switch (*format)
 	{
-		case '%':
-			printchar('%', n);
-		break;
-		case 'c':
-			c = va_arg(args, int);
-			printchar(c, n);
-		break;
-		case 's':
-			s = va_arg(args, char*);
-			printstr(s, n);
-		break;
 		case 'd': case 'i':
 			num = va_arg(args, int);
 			printint(num, n);
@@ -92,11 +80,41 @@ int parsef(const char *format, va_list args, int *n)
 			ui = va_arg(args, unsigned int);
 			printhex(ui, true, n);
 		break;
-		case '\0': return (-1);
-		break;
 		default:
 			write(STDOUT_FILENO, format - 1, 2);
 			*n += 2;
+	}
+	return (0);
+}
+
+/**
+* parsef - parses the format directives
+* @format: the format string
+* @args: the arguments
+* @n: the count of characters printed
+* Return: error code
+*/
+int parsef(const char *format, va_list args, int *n)
+{
+	char *s, c;
+
+	switch (*format)
+	{
+		case '%':
+			printchar('%', n);
+		break;
+		case 'c':
+			c = va_arg(args, int);
+			printchar(c, n);
+		break;
+		case 's':
+			s = va_arg(args, char*);
+			printstr(s, n);
+		break;
+		case '\0': return (-1);
+		break;
+		default:
+			printnum(format, args, n);
 	}
 	return (0);
 }
