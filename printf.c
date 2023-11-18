@@ -1,79 +1,44 @@
+#include <limits.h>
 #include <stdio.h>
 #include <stdarg.h>
 #include <unistd.h>
 #include "main.h"
 
 /**
-* printint - prints the given int num
-* @num: the number to print
-* Return: the number of printed characters
-*/
-
-int printint(int num)
-{
-	int n = 0;
-	int i = 0;
-	char sign;
-	char buffer[20];
-
-	if (num < 0)
-	{
-		sign = '-';
-		write(STDOUT_FILENO, &sign, 1);
-		n++;
-		num = -num;
-	}
-	if (num == 0)
-	{
-		buffer[i++] = '0';
-	}
-	while (num > 0)
-	{
-		buffer[i++] = '0' + (num % 10);
-		num /= 10;
-	}
-	while (i--)
-	{
-		write(STDOUT_FILENO, &buffer[i], 1);
-		n++;
-	}
-
-	return (n);
-}
-
-/**
 * printstr - prints the given string
 * @str: the string to print
+* @n: the count of characters printed
 * Return: the number of printed characters
 */
-int printstr(const char *str)
+int printstr(const char *str, int *n)
 {
-	int n = 0;
-
 	if (str == NULL)
 	{
 		write(STDOUT_FILENO, &"(null)", 6);
-		return (6);
+		*n += 6;
+		return (0);
 	}
 
 	while (*str)
 	{
 		write(STDOUT_FILENO, str++, 1);
-		n++;
+		(*n)++;
 	}
 
-	return (n);
+	return (0);
 }
 
 /**
 * parsef - parses the format directives
 * @format: the format string
 * @args: the arguments
+* @n: the count of characters printed
 * Return: the number of printed characters
 */
 int parsef(const char *format, va_list args)
 {
-	int n = 0, num;
+	int num;
+	unsigned int ui;
 	char c;
 	char *s;
 
@@ -81,30 +46,41 @@ int parsef(const char *format, va_list args)
 	{
 		case '%':
 			write(STDOUT_FILENO, format, 1);
-			n++;
+			(*n)++;
 		break;
 		case 'c':
 			c = va_arg(args, int);
 			write(STDOUT_FILENO, &c, 1);
-			n++;
+			(*n)++;
 		break;
 		case 's':
 			s = va_arg(args, char*);
-			n += printstr(s);
+			printstr(s, n);
 		break;
 		case 'd': case 'i':
 			num = va_arg(args, int);
-			n += printint(num);
+			printint(num, n);
+		break;
+		case 'b':
+			ui = va_arg(args, unsigned int);
+			printbin(ui, n);
+		break;
+		case 'u':
+			ui = va_arg(args, unsigned int);
+			printuint(ui, n);
+		break;
+		case 'o':
+			ui = va_arg(args, unsigned int);
+			printoct(ui, n);
 		break;
 		case '\0':
 			return (-1);
 		break;
 		default:
 			write(STDOUT_FILENO, format - 1, 2);
-			return (2);
+			*n += 2;
 	}
-
-	return (n);
+	return (0);
 }
 
 /**
@@ -133,10 +109,9 @@ int _printf(const char *format, ...)
 			continue;
 		}
 		format++;
-		r = parsef(format, args);
+		r = parsef(format, args, &n);
 		if (r < 0)
 			return (r);
-		n += r;
 
 		format++;
 	}
