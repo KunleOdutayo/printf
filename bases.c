@@ -25,16 +25,14 @@ int printbin(unsigned int num, int *n)
 /**
  * printint - prints the given int num
  * @num: the number to print
+ * @n: the count of characters printed
  * Return: the number of printed characters
  */
 
-int printint(int num)
+int printint(int num, int *n)
 {
-	int n = 0;
-	int i = o;
 	unsigned int ui = num;
 	int sign;
-	char buffer[20];
 
 	if (num < 0)
 	{
@@ -43,19 +41,52 @@ int printint(int num)
 		sign = num >> (sizeof(int) * CHAR_BIT - 1);
 		ui = (num ^ sign) - sign;
 	}
-	if (ui == 0)
+	printuint(ui, n);
+}
+
+
+/**
+ * printint - prints the given int num
+ * @num: the number to print
+ *@n: the count of charactes printed
+ * Return: the number of printed characters
+ */
+
+int printint(int num)
+{
+	int n = 20;
+	char buffer[20];
+
+	if (num == 0)
 	{
-		buffer[i++] = '0';
+		buffer[--i] = '0'
 	}
-	while (ui > 0)
+	while (num > 0)
 	{
-		buffer[i++] '0' + (ui % 10);
-		ui /= 10;
+		buffer[--i] = '0' + (num % 10);
+		num /= 10;
 	}
-	while (i--)
-	{write(STDOUT_FILENO, &buffer[i], 1);
-		n++;
-	}
+	write(STDOUT_FILENO, &buffer[i], 20 - i);
+	*n += 20 - i;
 
 	return (n);
+}
+
+/**
+ * printoct - prints the octal representation of the given unsigned int
+ * @num: the number of print
+ * @n: the court of characters printed
+ * Return: the number of printed characters
+ */
+int printoct(unsigned int num, int *n)
+{
+	char digit[] = { '0', '1', '2', '3', '4', '5', '6', '7'};
+
+	if (num > 7)
+	{
+		printoct(num / 8, n);
+	}
+	write(STDOUT_FILENO, &digit[num % 8], 1);
+	(*n)++;
+	return (0);
 }
