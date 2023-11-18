@@ -1,6 +1,7 @@
 #include "main.h"
 #include <limits.h>
 #include <unistd.h>
+#include <stdbool.h>
 
 /**
 * printbin - print the binary representation of num
@@ -90,6 +91,36 @@ int printoct(unsigned int num, int *n)
 		printoct(num / 8, n);
 	}
 	write(STDOUT_FILENO, &digit[num % 8], 1);
+	(*n)++;
+
+	return (0);
+}
+
+/**
+* printhex - prints the hexadecimal representation of the given usigned int
+* @num: the number to print
+* @cap: wheter to use captial letters
+* @n: the count of characters printed
+* Return: error code
+*/
+
+int printhex(unsigned int num, bool cap, int *n)
+{
+	char digit[10] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+	char base = (cap) ? 'A' : 'a';
+	char x;
+
+	if (num > 15)
+	{
+		printhex(num / 16, cap, n);
+	}
+	if (num % 16 > 9)
+	{
+		x = base + num % 16 - 10;
+		write(STDOUT_FILENO, &x, 1);
+	}
+	else
+		write(STDOUT_FILENO, &digit[num % 16], 1);
 	(*n)++;
 
 	return (0);

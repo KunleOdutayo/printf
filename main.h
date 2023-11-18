@@ -2,6 +2,7 @@
 #define MAIN__PRINTF
 
 #include <stdarg.h>
+#include <stdbool.h>
 
 
 int _printf(const char *format, ...);
@@ -12,6 +13,7 @@ int printint(const int num, int *n);
 int printbin(unsigned int num, int *n);
 int printuint(unsigned int num, int *n);
 int printoct(unsigned int num, int *n);
+int printhex(unsigned int num, bool cap, int *n);
 
 
 

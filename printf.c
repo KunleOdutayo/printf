@@ -84,6 +84,14 @@ int parsef(const char *format, va_list args, int *n)
 			ui = va_arg(args, unsigned int);
 			printoct(ui, n);
 		break;
+		case 'x':
+			ui = va_arg(args, unsigned int);
+			printhex(ui, false, n);
+		break;
+		case 'X':
+			ui = va_arg(args, unsigned int);
+			printhex(ui, true, n);
+		break;
 		case '\0': return (-1);
 		break;
 		default:
