@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include "main.h"
 
+
 /**
 * printstr - prints the given string
 * @str: the string to print
@@ -35,7 +36,7 @@ int printstr(const char *str, int *n)
 * @n: the count of characters printed
 * Return: the number of printed characters
 */
-int parsef(const char *format, va_list args)
+int parsef(const char *format, va_list args, int *n)
 {
 	int num;
 	unsigned int ui;
