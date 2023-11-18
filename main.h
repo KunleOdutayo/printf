@@ -6,6 +6,7 @@
 
 int _printf(const char *format, ...);
 int parsef(const char *format, va_list args, int *n);
+int printchar(const char chr, int *n);
 int printstr(const char *str, int *n);
 int printint(const int num, int *n);
 int printbin(unsigned int num, int *n);

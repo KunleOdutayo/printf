@@ -26,7 +26,7 @@ int printbin(unsigned int num, int *n)
 * printint - prints the given int num
 * @num: the number to print
 * @n: the count of characters printed
-* Return: the number of printed characters
+* Return: error code
 */
 
 int printint(int num, int *n)
@@ -51,7 +51,7 @@ int printint(int num, int *n)
 * printuint - prints the given usigned int
 * @num: the number to print
 * @n: the count of characters printed
-* Return: the number of printed characters
+* Return: error code
 */
 
 int printuint(unsigned int num, int *n)
@@ -78,7 +78,7 @@ int printuint(unsigned int num, int *n)
 * printoct - prints the octal representation of the given usigned int
 * @num: the number to print
 * @n: the count of characters printed
-* Return: the number of printed characters
+* Return: error code
 */
 
 int printoct(unsigned int num, int *n)
