@@ -6,10 +6,23 @@
 
 
 /**
+* printchar - prints the given character
+* @chr: the string to print
+* @n: the count of characters printed
+* Return: error code
+*/
+int printchar(const char chr, int *n)
+{
+	write(STDOUT_FILENO, &chr, 1);
+	(*n)++;
+	return (0);
+}
+
+/**
 * printstr - prints the given string
 * @str: the string to print
 * @n: the count of characters printed
-* Return: the number of printed characters
+* Return: error code
 */
 int printstr(const char *str, int *n)
 {
@@ -34,25 +47,22 @@ int printstr(const char *str, int *n)
 * @format: the format string
 * @args: the arguments
 * @n: the count of characters printed
-* Return: the number of printed characters
+* Return: error code
 */
 int parsef(const char *format, va_list args, int *n)
 {
 	int num;
 	unsigned int ui;
-	char c;
-	char *s;
+	char *s, c;
 
 	switch (*format)
 	{
 		case '%':
-			write(STDOUT_FILENO, format, 1);
-			(*n)++;
+			printchar('%', n);
 		break;
 		case 'c':
 			c = va_arg(args, int);
-			write(STDOUT_FILENO, &c, 1);
-			(*n)++;
+			printchar(c, n);
 		break;
 		case 's':
 			s = va_arg(args, char*);
@@ -74,8 +84,7 @@ int parsef(const char *format, va_list args, int *n)
 			ui = va_arg(args, unsigned int);
 			printoct(ui, n);
 		break;
-		case '\0':
-			return (-1);
+		case '\0': return (-1);
 		break;
 		default:
 			write(STDOUT_FILENO, format - 1, 2);
